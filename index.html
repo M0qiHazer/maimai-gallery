@@ -8,69 +8,81 @@
   :root{
     --bg:#0e1014; --card:#181b21; --card-hover:#20242c; --line:#262b34;
     --text:#e8ebf0; --muted:#8b93a1; --accent:#5aa9ff; --pink:#ff6fa5;
+    --chip:#1c2128;
   }
   *{box-sizing:border-box}
   html,body{margin:0;padding:0;background:var(--bg);color:var(--text);
     font-family:-apple-system,"Segoe UI","Microsoft YaHei",system-ui,sans-serif}
   a{color:var(--accent)}
-  header{position:sticky;top:0;z-index:20;background:rgba(14,16,20,.92);
-    backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
-  .inner{max-width:1280px;margin:0 auto;padding:16px 20px}
-  h1{margin:0 0 4px;font-size:19px;letter-spacing:.5px}
+  header{position:sticky;top:0;z-index:20;background:rgba(14,16,20,.94);
+    backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+  .inner{max-width:1320px;margin:0 auto;padding:14px 18px 12px}
+  h1{margin:0 0 3px;font-size:18px;letter-spacing:.4px}
   h1 span{color:var(--pink)}
-  .sub{color:var(--muted);font-size:12.5px;margin-bottom:14px}
-  .bar{display:flex;gap:12px;flex-wrap:wrap;align-items:center}
+  .sub{color:var(--muted);font-size:12px;margin-bottom:12px}
+  .bar{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
   .tabs{display:flex;gap:6px;flex-wrap:wrap}
-  .tab{padding:7px 15px;border-radius:9px;border:1px solid var(--line);
-    background:var(--card);color:var(--muted);cursor:pointer;font-size:13.5px;
-    transition:.15s}
+  .tab{padding:6px 14px;border-radius:9px;border:1px solid var(--line);
+    background:var(--card);color:var(--muted);cursor:pointer;font-size:13.5px;transition:.15s}
   .tab:hover{background:var(--card-hover);color:var(--text)}
   .tab.on{background:var(--accent);border-color:var(--accent);color:#06121f;font-weight:600}
-  input[type=search]{flex:1;min-width:180px;padding:8px 13px;border-radius:9px;
+  input[type=search]{flex:1;min-width:170px;padding:7px 12px;border-radius:9px;
     border:1px solid var(--line);background:var(--card);color:var(--text);
-    font-size:14px;outline:none}
+    font-size:13.5px;outline:none}
   input[type=search]:focus{border-color:var(--accent)}
-  .count{color:var(--muted);font-size:12.5px;white-space:nowrap}
+  .count{color:var(--muted);font-size:12px;white-space:nowrap}
 
-  main{max-width:1280px;margin:0 auto;padding:20px}
-  .grid{display:grid;gap:12px;
-    grid-template-columns:repeat(auto-fill,minmax(132px,1fr))}
+  .filters{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin-top:10px}
+  .chips{display:flex;gap:6px;flex-wrap:wrap}
+  .chip{padding:4px 11px;border-radius:20px;border:1px solid var(--line);
+    background:var(--chip);color:var(--muted);cursor:pointer;font-size:12.5px;
+    transition:.15s;white-space:nowrap}
+  .chip:hover{color:var(--text);border-color:#3a4150}
+  .chip.on{background:var(--pink);border-color:var(--pink);color:#20060f;font-weight:600}
+  select{padding:6px 10px;border-radius:9px;border:1px solid var(--line);
+    background:var(--card);color:var(--text);font-size:13px;max-width:280px;outline:none}
+  .reset{padding:5px 11px;border-radius:8px;border:1px solid var(--line);
+    background:transparent;color:var(--muted);cursor:pointer;font-size:12.5px}
+
+  main{max-width:1320px;margin:0 auto;padding:18px}
+  .grid{display:grid;gap:11px;grid-template-columns:repeat(auto-fill,minmax(128px,1fr))}
   .cell{background:var(--card);border:1px solid var(--line);border-radius:12px;
     overflow:hidden;cursor:pointer;transition:.16s;display:flex;flex-direction:column}
   .cell:hover{background:var(--card-hover);border-color:var(--accent);transform:translateY(-2px)}
   .thumb{aspect-ratio:1;display:flex;align-items:center;justify-content:center;
     background:linear-gradient(145deg,#14171c,#0c0e12);overflow:hidden}
   .thumb img{width:100%;height:100%;object-fit:contain;display:block}
-  .cap{padding:7px 9px;font-size:11.5px;line-height:1.35;border-top:1px solid var(--line)}
+  .cap{padding:6px 9px;font-size:11.5px;line-height:1.35;border-top:1px solid var(--line)}
   .cap .n{display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
   .cap .i{color:var(--muted);font-size:10.5px}
   .cell.text .thumb{aspect-ratio:auto;padding:16px 10px;font-size:13px;
     text-align:center;line-height:1.4;word-break:break-all}
   .swatch{display:inline-block;width:9px;height:9px;border-radius:50%;margin-right:5px;
     vertical-align:middle}
-
-  #sentinel{height:1px}
   .loading{text-align:center;color:var(--muted);padding:26px;font-size:13px}
+  #sentinel{height:1px}
 
-  /* 弹层 */
-  .modal{position:fixed;inset:0;background:rgba(0,0,0,.78);display:none;
+  .modal{position:fixed;inset:0;background:rgba(0,0,0,.8);display:none;
     align-items:center;justify-content:center;padding:20px;z-index:50}
   .modal.on{display:flex}
   .panel{background:var(--card);border:1px solid var(--line);border-radius:16px;
-    max-width:min(760px,96vw);max-height:92vh;overflow:auto;padding:22px}
+    max-width:min(760px,96vw);max-height:92vh;overflow:auto;padding:20px}
   .panel .big{display:flex;justify-content:center;background:#0b0d11;border-radius:12px;
-    padding:14px;margin-bottom:16px}
-  .panel .big img{max-width:100%;max-height:46vh;object-fit:contain}
-  .panel h2{margin:0 0 6px;font-size:17px;font-weight:600}
-  .meta{color:var(--muted);font-size:13px;line-height:1.6;margin-bottom:14px}
+    padding:14px;margin-bottom:14px}
+  .panel .big img{max-width:100%;max-height:44vh;object-fit:contain}
+  .panel h2{margin:0 0 6px;font-size:17px}
+  .meta{color:var(--muted);font-size:12.5px;line-height:1.65;margin-bottom:12px}
+  .tags{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:14px}
+  .tag{font-size:11.5px;padding:3px 9px;border-radius:20px;background:#232935;
+    color:#a9b3c2;border:1px solid #2d3441}
   .cmd{display:flex;gap:8px;flex-wrap:wrap}
-  code{background:#0b0d11;border:1px solid var(--line);padding:7px 11px;
-    border-radius:8px;font-size:13px;font-family:ui-monospace,Consolas,monospace;color:var(--pink)}
+  code{background:#0b0d11;border:1px solid var(--line);padding:7px 11px;border-radius:8px;
+    font-size:13px;font-family:ui-monospace,Consolas,monospace;color:var(--pink)}
   button{cursor:pointer;border-radius:8px;border:1px solid var(--line);
     background:#20242c;color:var(--text);padding:7px 13px;font-size:13px}
   button:hover{background:#272c36;border-color:var(--accent)}
   .close{float:right}
-  footer{max-width:1280px;margin:0 auto;padding:10px 20px 50px;color:var(--muted);
+  footer{max-width:1320px;margin:0 auto;padding:10px 18px 50px;color:var(--muted);
     font-size:12px;line-height:1.7}
 </style>
 </head>
@@ -78,11 +90,17 @@
 <header>
   <div class="inner">
     <h1>舞萌 <span>收藏品图鉴</span></h1>
-    <div class="sub">点开任意一个看大图,复制指令回群里 / 私聊发给 bot 就能取图</div>
+    <div class="sub">点开看大图,复制指令回群 / 私聊发给 bot 就能取图</div>
     <div class="bar">
       <div class="tabs" id="tabs"></div>
-      <input type="search" id="q" placeholder="搜索名字或 ID,例如 初音 / 305502">
+      <input type="search" id="q" placeholder="搜名字 / 系列 / ID">
       <div class="count" id="count"></div>
+    </div>
+    <div class="filters">
+      <select id="fGroup"></select>
+      <select id="fSeries"></select>
+      <select id="fSource"></select>
+      <button class="reset" onclick="resetFilters()">重置</button>
     </div>
   </div>
 </header>
@@ -91,9 +109,7 @@
 
 <footer>
   数据来源:<a href="https://maimai.lxns.net" target="_blank" rel="noopener">落雪查分器</a> ·
-  图片托管于 <code>assets2.lxns.net</code> ·
-  本站仅索引,不存储任何图片<br>
-  欢迎来到舞萌DX
+  图片托管于 <code>assets2.lxns.net</code> · 本站只做索引,不存储图片
 </footer>
 
 <div class="modal" id="modal">
@@ -101,6 +117,7 @@
     <button class="close" onclick="closeModal()">关闭</button>
     <div class="big"><img id="mImg" alt=""></div>
     <h2 id="mName"></h2>
+    <div class="tags" id="mTags"></div>
     <div class="meta" id="mMeta"></div>
     <div class="cmd">
       <code id="mCmd"></code>
@@ -111,28 +128,27 @@
 
 <script>
 const KINDS = [
-  {key:'icon',  label:'头像',   cmd:'头像'},
-  {key:'plate', label:'姓名框', cmd:'姓名框'},
-  {key:'frame', label:'背景',   cmd:'背景'},
-  {key:'trophy',label:'称号',   cmd:'称号'},
+  {key:'icon',   label:'头像',   cmd:'头像'},
+  {key:'plate',  label:'姓名框', cmd:'姓名框'},
+  {key:'frame',  label:'背景',   cmd:'背景'},
+  {key:'trophy', label:'称号',   cmd:'称号'},
 ];
 const PAGE = 120;
+const state = {kind:'icon', data:null, list:[], shown:0, q:'',
+               group:'', series:'', source:''};
+const $ = id => document.getElementById(id);
 
-let state = {kind:'icon', items:[], shown:0, filtered:[], q:''};
-const $ = (id)=>document.getElementById(id);
-
-/* ---- 顶部标签 ---- */
 KINDS.forEach((k,i)=>{
   const b = document.createElement('button');
   b.className = 'tab' + (i===0?' on':'');
   b.textContent = k.label;
-  b.onclick = ()=>switchKind(k.key);
   b.dataset.kind = k.key;
+  b.onclick = ()=>switchKind(k.key);
   $('tabs').appendChild(b);
 });
 
 function switchKind(kind){
-  if(state.kind===kind && state.items.length) return;
+  if(state.kind===kind && state.data) return;
   state.kind = kind;
   [...document.querySelectorAll('.tab')].forEach(t=>
     t.classList.toggle('on', t.dataset.kind===kind));
@@ -141,32 +157,57 @@ function switchKind(kind){
 
 async function load(){
   $('grid').innerHTML = '<div class="loading">加载中…</div>';
-  $('count').textContent = '';
   try{
     const res = await fetch(`data/${state.kind}.json`);
-    const data = await res.json();
-    state.items = data.items;
-    applyFilter();
+    state.data = await res.json();
+    fillSelects();
+    applyFilters();
   }catch(e){
     $('grid').innerHTML = '<div class="loading">数据加载失败,请刷新</div>';
   }
 }
 
-function applyFilter(){
+function fillSelects(){
+  const d = state.data;
+  $('fGroup').innerHTML =
+    `<option value="">归类:全部 (${d.total})</option>` +
+    d.groups.map(g=>`<option value="${esc(g.name)}">${esc(g.name)} (${g.count})</option>`).join('');
+  $('fSeries').innerHTML =
+    `<option value="">系列:全部 (${d.series.length} 种)</option>` +
+    d.series.map(s=>`<option value="${esc(s.name)}">${esc(s.name)} (${s.count})</option>`).join('');
+  $('fSource').innerHTML =
+    `<option value="">获取方式:全部</option>` +
+    d.sources.map(s=>`<option value="${esc(s.name)}">${esc(s.name)} (${s.count})</option>`).join('');
+  $('fGroup').value = state.group;
+  $('fSeries').value = state.series;
+  $('fSource').value = state.source;
+}
+
+function applyFilters(){
   const q = state.q.trim().toLowerCase();
-  state.filtered = !q ? state.items : state.items.filter(it=>
-    it.name.toLowerCase().includes(q) || String(it.id) === q ||
-    String(it.id).includes(q));
+  state.list = state.data.items.filter(it=>{
+    if(state.group && it.group !== state.group) return false;
+    if(state.series && it.series !== state.series) return false;
+    if(state.source && it.source !== state.source) return false;
+    if(!q) return true;
+    return it.name.toLowerCase().includes(q)
+        || (it.series||'').toLowerCase().includes(q)
+        || String(it.id) === q;
+  });
   state.shown = 0;
   $('grid').innerHTML = '';
-  $('count').textContent = `${state.filtered.length} / ${state.items.length} 个`;
+  $('count').textContent = `${state.list.length} / ${state.data.total} 个`;
+  if(!state.list.length){
+    $('grid').innerHTML = '<div class="loading">没有符合条件的,换个筛选试试</div>';
+    return;
+  }
   loadMore();
 }
 
 function loadMore(){
-  const end = Math.min(state.shown + PAGE, state.filtered.length);
+  const end = Math.min(state.shown + PAGE, state.list.length);
   const frag = document.createDocumentFragment();
-  for(let i=state.shown;i<end;i++) frag.appendChild(cell(state.filtered[i]));
+  for(let i=state.shown;i<end;i++) frag.appendChild(cell(state.list[i]));
   $('grid').appendChild(frag);
   state.shown = end;
 }
@@ -197,19 +238,20 @@ function swColor(c){
 const kindCmd = k => (KINDS.find(x=>x.key===k)||{}).cmd || '头像';
 
 function openItem(it){
-  $('mImg').style.display = 'block';
-  $('mImg').src = it.img || '';
-  $('mImg').alt = it.name;
-  if(!it.img) $('mImg').style.display='none';
+  if(it.img){ $('mImg').src = it.img; $('mImg').style.display='block'; }
+  else { $('mImg').removeAttribute('src'); $('mImg').style.display='none'; }
   $('mName').textContent = it.name;
-  const bits = [`ID #${it.id}`];
-  if(it.genre) bits.push(it.genre);
-  if(it.desc) bits.push(it.desc);
-  $('mMeta').textContent = bits.join(' · ');
+  $('mTags').innerHTML =
+    `<span class="tag">${esc(it.group)}</span>` +
+    `<span class="tag">${esc(it.series)}</span>` +
+    `<span class="tag">${esc(it.source)}</span>` +
+    (it.color ? `<span class="tag">${esc(it.color)}</span>` : '');
+  $('mMeta').textContent = `ID #${it.id}` + (it.desc ? ` · ${it.desc}` : '');
   $('mCmd').textContent = `/${kindCmd(state.kind)} #${it.id}`;
   $('modal').classList.add('on');
 }
 function closeModal(){ $('modal').classList.remove('on'); }
+
 function copyCmd(btn){
   const t = $('mCmd').textContent;
   const done = ()=>{ const old=btn.textContent; btn.textContent='已复制';
@@ -221,16 +263,26 @@ function copyCmd(btn){
     ta.select(); try{document.execCommand('copy');}catch(e){} ta.remove(); done();
   }
 }
-function esc(s){ return String(s).replace(/[&<>"]/g, c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c])); }
 
-$('q').addEventListener('input', e=>{ state.q = e.target.value; applyFilter(); });
+function resetFilters(){
+  state.group = state.series = state.source = '';
+  $('fGroup').value = $('fSeries').value = $('fSource').value = '';
+  applyFilters();
+}
+
+$('q').addEventListener('input', e=>{ state.q = e.target.value; applyFilters(); });
+$('fGroup').addEventListener('change', e=>{ state.group = e.target.value; applyFilters(); });
+$('fSeries').addEventListener('change', e=>{ state.series = e.target.value; applyFilters(); });
+$('fSource').addEventListener('change', e=>{ state.source = e.target.value; applyFilters(); });
 $('modal').addEventListener('click', e=>{ if(e.target.id==='modal') closeModal(); });
 document.addEventListener('keydown', e=>{ if(e.key==='Escape') closeModal(); });
 
-/* 滚动到底自动加载 */
 new IntersectionObserver(es=>{
-  if(es[0].isIntersecting && state.shown < state.filtered.length) loadMore();
+  if(es[0].isIntersecting && state.data && state.shown < state.list.length) loadMore();
 }).observe($('sentinel'));
+
+function esc(s){ return String(s==null?'':s).replace(/[&<>"]/g,
+  c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c])); }
 
 load();
 </script>
