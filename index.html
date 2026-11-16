@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>舞萌收藏品图鉴</title>
+<style>
+  :root{
+    --bg:#0e1014; --card:#181b21; --card-hover:#20242c; --line:#262b34;
+    --text:#e8ebf0; --muted:#8b93a1; --accent:#5aa9ff; --pink:#ff6fa5;
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0;padding:0;background:var(--bg);color:var(--text);
+    font-family:-apple-system,"Segoe UI","Microsoft YaHei",system-ui,sans-serif}
+  a{color:var(--accent)}
+  header{position:sticky;top:0;z-index:20;background:rgba(14,16,20,.92);
+    backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
+  .inner{max-width:1280px;margin:0 auto;padding:16px 20px}
+  h1{margin:0 0 4px;font-size:19px;letter-spacing:.5px}
+  h1 span{color:var(--pink)}
+  .sub{color:var(--muted);font-size:12.5px;margin-bottom:14px}
+  .bar{display:flex;gap:12px;flex-wrap:wrap;align-items:center}
+  .tabs{display:flex;gap:6px;flex-wrap:wrap}
+  .tab{padding:7px 15px;border-radius:9px;border:1px solid var(--line);
+    background:var(--card);color:var(--muted);cursor:pointer;font-size:13.5px;
+    transition:.15s}
+  .tab:hover{background:var(--card-hover);color:var(--text)}
+  .tab.on{background:var(--accent);border-color:var(--accent);color:#06121f;font-weight:600}
+  input[type=search]{flex:1;min-width:180px;padding:8px 13px;border-radius:9px;
+    border:1px solid var(--line);background:var(--card);color:var(--text);
+    font-size:14px;outline:none}
+  input[type=search]:focus{border-color:var(--accent)}
+  .count{color:var(--muted);font-size:12.5px;white-space:nowrap}
+
+  main{max-width:1280px;margin:0 auto;padding:20px}
+  .grid{display:grid;gap:12px;
+    grid-template-columns:repeat(auto-fill,minmax(132px,1fr))}
+  .cell{background:var(--card);border:1px solid var(--line);border-radius:12px;
+    overflow:hidden;cursor:pointer;transition:.16s;display:flex;flex-direction:column}
+  .cell:hover{background:var(--card-hover);border-color:var(--accent);transform:translateY(-2px)}
+  .thumb{aspect-ratio:1;display:flex;align-items:center;justify-content:center;
+    background:linear-gradient(145deg,#14171c,#0c0e12);overflow:hidden}
+  .thumb img{width:100%;height:100%;object-fit:contain;display:block}
+  .cap{padding:7px 9px;font-size:11.5px;line-height:1.35;border-top:1px solid var(--line)}
+  .cap .n{display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .cap .i{color:var(--muted);font-size:10.5px}
+  .cell.text .thumb{aspect-ratio:auto;padding:16px 10px;font-size:13px;
+    text-align:center;line-height:1.4;word-break:break-all}
+  .swatch{display:inline-block;width:9px;height:9px;border-radius:50%;margin-right:5px;
+    vertical-align:middle}
+
+  #sentinel{height:1px}
+  .loading{text-align:center;color:var(--muted);padding:26px;font-size:13px}
+
+  /* 弹层 */
+  .modal{position:fixed;inset:0;background:rgba(0,0,0,.78);display:none;
+    align-items:center;justify-content:center;padding:20px;z-index:50}
+  .modal.on{display:flex}
+  .panel{background:var(--card);border:1px solid var(--line);border-radius:16px;
+    max-width:min(760px,96vw);max-height:92vh;overflow:auto;padding:22px}
+  .panel .big{display:flex;justify-content:center;background:#0b0d11;border-radius:12px;
+    padding:14px;margin-bottom:16px}
+  .panel .big img{max-width:100%;max-height:46vh;object-fit:contain}
+  .panel h2{margin:0 0 6px;font-size:17px;font-weight:600}
+  .meta{color:var(--muted);font-size:13px;line-height:1.6;margin-bottom:14px}
+  .cmd{display:flex;gap:8px;flex-wrap:wrap}
+  code{background:#0b0d11;border:1px solid var(--line);padding:7px 11px;
+    border-radius:8px;font-size:13px;font-family:ui-monospace,Consolas,monospace;color:var(--pink)}
+  button{cursor:pointer;border-radius:8px;border:1px solid var(--line);
+    background:#20242c;color:var(--text);padding:7px 13px;font-size:13px}
+  button:hover{background:#272c36;border-color:var(--accent)}
+  .close{float:right}
+  footer{max-width:1280px;margin:0 auto;padding:10px 20px 50px;color:var(--muted);
+    font-size:12px;line-height:1.7}
+</style>
+</head>
+<body>
+<header>
+  <div class="inner">
+    <h1>舞萌 <span>收藏品图鉴</span></h1>
+    <div class="sub">点开任意一个看大图,复制指令回群里 / 私聊发给 bot 就能取图</div>
+    <div class="bar">
+      <div class="tabs" id="tabs"></div>
+      <input type="search" id="q" placeholder="搜索名字或 ID,例如 初音 / 305502">
+      <div class="count" id="count"></div>
+    </div>
+  </div>
+</header>
+
+<main><div class="grid" id="grid"></div><div id="sentinel"></div></main>
+
+<footer>
+  数据来源:<a href="https://maimai.lxns.net" target="_blank" rel="noopener">落雪查分器</a> ·
+  图片托管于 <code>assets2.lxns.net</code> ·
+  本站仅索引,不存储任何图片<br>
+  欢迎来到舞萌DX
+</footer>
+
+<div class="modal" id="modal">
+  <div class="panel">
+    <button class="close" onclick="closeModal()">关闭</button>
+    <div class="big"><img id="mImg" alt=""></div>
+    <h2 id="mName"></h2>
+    <div class="meta" id="mMeta"></div>
+    <div class="cmd">
+      <code id="mCmd"></code>
+      <button onclick="copyCmd(this)">复制指令</button>
+    </div>
+  </div>
+</div>
+
+<script>
+const KINDS = [
+  {key:'icon',  label:'头像',   cmd:'头像'},
+  {key:'plate', label:'姓名框', cmd:'姓名框'},
+  {key:'frame', label:'背景',   cmd:'背景'},
+  {key:'trophy',label:'称号',   cmd:'称号'},
+];
+const PAGE = 120;
+
+let state = {kind:'icon', items:[], shown:0, filtered:[], q:''};
+const $ = (id)=>document.getElementById(id);
+
+/* ---- 顶部标签 ---- */
+KINDS.forEach((k,i)=>{
+  const b = document.createElement('button');
+  b.className = 'tab' + (i===0?' on':'');
+  b.textContent = k.label;
+  b.onclick = ()=>switchKind(k.key);
+  b.dataset.kind = k.key;
+  $('tabs').appendChild(b);
+});
+
+function switchKind(kind){
+  if(state.kind===kind && state.items.length) return;
+  state.kind = kind;
+  [...document.querySelectorAll('.tab')].forEach(t=>
+    t.classList.toggle('on', t.dataset.kind===kind));
+  load();
+}
+
+async function load(){
+  $('grid').innerHTML = '<div class="loading">加载中…</div>';
+  $('count').textContent = '';
+  try{
+    const res = await fetch(`data/${state.kind}.json`);
+    const data = await res.json();
+    state.items = data.items;
+    applyFilter();
+  }catch(e){
+    $('grid').innerHTML = '<div class="loading">数据加载失败,请刷新</div>';
+  }
+}
+
+function applyFilter(){
+  const q = state.q.trim().toLowerCase();
+  state.filtered = !q ? state.items : state.items.filter(it=>
+    it.name.toLowerCase().includes(q) || String(it.id) === q ||
+    String(it.id).includes(q));
+  state.shown = 0;
+  $('grid').innerHTML = '';
+  $('count').textContent = `${state.filtered.length} / ${state.items.length} 个`;
+  loadMore();
+}
+
+function loadMore(){
+  const end = Math.min(state.shown + PAGE, state.filtered.length);
+  const frag = document.createDocumentFragment();
+  for(let i=state.shown;i<end;i++) frag.appendChild(cell(state.filtered[i]));
+  $('grid').appendChild(frag);
+  state.shown = end;
+}
+
+function cell(it){
+  const d = document.createElement('div');
+  const isText = state.kind === 'trophy';
+  d.className = 'cell' + (isText ? ' text' : '');
+  if(isText){
+    const sw = it.color ? `<span class="swatch" style="background:${swColor(it.color)}"></span>` : '';
+    d.innerHTML = `<div class="thumb">${sw}${esc(it.name)}</div>
+      <div class="cap"><span class="i">#${it.id}</span></div>`;
+  }else{
+    d.innerHTML = `<div class="thumb"><img loading="lazy" src="${it.img}" alt="${esc(it.name)}"></div>
+      <div class="cap"><span class="n" title="${esc(it.name)}">${esc(it.name)}</span>
+      <span class="i">#${it.id}</span></div>`;
+  }
+  d.onclick = ()=>openItem(it);
+  return d;
+}
+
+function swColor(c){
+  const map = {Normal:'#9aa4b2', Bronze:'#c98a4b', Silver:'#c3cbd6',
+               Gold:'#e7c96a', Rainbow:'#b78cff', Purple:'#a06bd8'};
+  return map[c] || '#9aa4b2';
+}
+
+const kindCmd = k => (KINDS.find(x=>x.key===k)||{}).cmd || '头像';
+
+function openItem(it){
+  $('mImg').style.display = 'block';
+  $('mImg').src = it.img || '';
+  $('mImg').alt = it.name;
+  if(!it.img) $('mImg').style.display='none';
+  $('mName').textContent = it.name;
+  const bits = [`ID #${it.id}`];
+  if(it.genre) bits.push(it.genre);
+  if(it.desc) bits.push(it.desc);
+  $('mMeta').textContent = bits.join(' · ');
+  $('mCmd').textContent = `/${kindCmd(state.kind)} #${it.id}`;
+  $('modal').classList.add('on');
+}
+function closeModal(){ $('modal').classList.remove('on'); }
+function copyCmd(btn){
+  const t = $('mCmd').textContent;
+  const done = ()=>{ const old=btn.textContent; btn.textContent='已复制';
+                     setTimeout(()=>btn.textContent=old,1200); };
+  if(navigator.clipboard?.writeText){
+    navigator.clipboard.writeText(t).then(done, ()=>{});
+  }else{
+    const ta=document.createElement('textarea'); ta.value=t; document.body.appendChild(ta);
+    ta.select(); try{document.execCommand('copy');}catch(e){} ta.remove(); done();
+  }
+}
+function esc(s){ return String(s).replace(/[&<>"]/g, c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c])); }
+
+$('q').addEventListener('input', e=>{ state.q = e.target.value; applyFilter(); });
+$('modal').addEventListener('click', e=>{ if(e.target.id==='modal') closeModal(); });
+document.addEventListener('keydown', e=>{ if(e.key==='Escape') closeModal(); });
+
+/* 滚动到底自动加载 */
+new IntersectionObserver(es=>{
+  if(es[0].isIntersecting && state.shown < state.filtered.length) loadMore();
+}).observe($('sentinel'));
+
+load();
+</script>
+</body>
+</html>
