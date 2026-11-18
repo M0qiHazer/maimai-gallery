@@ -90,7 +90,7 @@
 <header>
   <div class="inner">
     <h1>舞萌 <span>收藏品图鉴</span></h1>
-    <div class="sub">点开看大图,复制指令回群 / 私聊发给 bot 就能取图</div>
+    <div class="sub">点开任意一件 → 复制「/兑换 类别 #代号」→ 回群里发给 bot(要先 /注册 并 /签到 攒积分)</div>
     <div class="bar">
       <div class="tabs" id="tabs"></div>
       <input type="search" id="q" placeholder="搜名字 / 系列 / ID">
@@ -247,7 +247,7 @@ function openItem(it){
     `<span class="tag">${esc(it.source)}</span>` +
     (it.color ? `<span class="tag">${esc(it.color)}</span>` : '');
   $('mMeta').textContent = `ID #${it.id}` + (it.desc ? ` · ${it.desc}` : '');
-  $('mCmd').textContent = `/${kindCmd(state.kind)} #${it.id}`;
+  $('mCmd').textContent = `/兑换 ${kindCmd(state.kind)} #${it.id}`;
   $('modal').classList.add('on');
 }
 function closeModal(){ $('modal').classList.remove('on'); }
